@@ -1,11 +1,19 @@
 import assert from "assert"
 import { RoomService } from "."
 import { describe, test } from "mocha"
+import { RoomRepositoryStub } from "./room.repository.stub"
+
 
 describe('Room service', () => {
     test('Get list room', async () => {
         // Given
-        const roomService = new RoomService()
+        const expectedRooms = [{
+            floor: 2,
+            number: 1,
+            price: 50,
+        }]
+        const roomRepository = new RoomRepositoryStub(expectedRooms);
+        const roomService = new RoomService(roomRepository)
 
         // When
         const rooms = await roomService.getRoom()
@@ -13,7 +21,7 @@ describe('Room service', () => {
         // Then
         assert.deepStrictEqual(rooms, [
             {
-                floor: 1,
+                floor: 2,
                 number: 1,
                 price: 50,
             }

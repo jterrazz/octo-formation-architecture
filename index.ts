@@ -1,9 +1,11 @@
-import { RoomSqlRepository } from "./room.repository.sql.js";
+interface RoomRepository {
+    get(): Promise<unknown>
+}
 
 export class RoomService {
-    async getRoom() {
-        const roomRepository = new RoomSqlRepository()
+    constructor(private readonly roomRepository: RoomRepository) {}
 
-        return roomRepository.get()
+    async getRoom() {
+        return this.roomRepository.get()
     }
 }
